@@ -1,4 +1,4 @@
-[toc]
+toc
 
 # How To Make It Work
 ## env set up
