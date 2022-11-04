@@ -8,7 +8,7 @@ def run():
     helper.start()
 
 def test():
-    helper = window_operation.WindowsHelper()
+    helper = window_operation.WindowsHelper(is_test=True)
     if not helper.init():
         print("Cannot init, Exit")
         return

@@ -7,7 +7,7 @@ def nothing(x):
 
 def run():
     # Load image
-    image = cv2.imread('imgs/aaaa.png')
+    image = cv2.imread('imgs/test_52.png')
     
     # Create a window
     cv2.namedWindow('image')
