@@ -1,5 +1,7 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QGridLayout
 from PySide6.QtWidgets import QGridLayout, QMenu, QCheckBox
+from PySide6.QtGui import QDoubleValidator
+from PySide6.QtCore import Qt
 
 class FunctionalView(QWidget):
     def __init__(self, parent=None):

@@ -1,6 +1,9 @@
-
+from ui import ScreenShotCoordinateView
+from ui import FunctionalView
+import FishingHelper
 from PySide6.QtWidgets import QWidget, QPushButton, QGridLayout
-from threading import Thread
+from PySide6.QtCore import QSize, QThread
+import FishingThread
 
 class MainView(QWidget):
     def __init__(self, parent=None):
@@ -8,8 +11,8 @@ class MainView(QWidget):
         self.init_child_widget()
 
     def init_child_widget(self):
-        self.screeshot_view = ScreenShotCoordinateView(self)
-        self.functional_view = FunctionalView(self)
+        self.screeshot_view = ScreenShotCoordinateView.ScreenShotCoordinateView(self)
+        self.functional_view = FunctionalView.FunctionalView(self)
 
         self.start_button = QPushButton("Start Fishing")
         self.start_button.setCheckable(True)
@@ -29,12 +32,22 @@ class MainView(QWidget):
     def start_fishing(self):
         functional_config = self.functional_view.get_all_config_data()
         capture_area_coordinate = self.screeshot_view.get_capture_coordinate()
-        self.fishing_instance = FishingHelper(functional_config, capture_area_coordinate)
-        running_thread = Thread(self.fishing_instance.start())
-        running_thread.start()
+        self.fishing_helper = FishingHelper.FishingHelper(functional_config, capture_area_coordinate)
+        self.fish_thread = FishingThread.FishingThread(self.fishing_helper)
+        self.fish_thread.start()
+        self.start_button.setText("Fishing")
+        self.start_button.setEnabled(False)
 
     def stop_fishing(self):
-        self.fishing_instance.stop()
+        if self.fish_thread.isRunning():
+            self.fish_thread.terminate()
+            self.stop_button.setText("Stoping...")
+            self.stop_button.setEnabled(False)
+            self.fish_thread.wait()
+            self.stop_button.setText("Stop")
+            self.stop_button.setEnabled(True)
+            self.start_button.setText("Start Fishing")
+            self.start_button.setEnabled(True)
 
     def resize_and_show(self):
         self.show()

@@ -1,3 +1,4 @@
+from ui import ScreenShotWidget
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QGridLayout
 from PySide6.QtGui import QDoubleValidator
@@ -23,7 +24,7 @@ class ScreenShotCoordinateView(QWidget):
         self.rect_button.clicked.connect(self.show_screenshot_dialog)
 
     def show_screenshot_dialog(self):
-        widget = ScreenShotMainWidget(self)
+        widget = ScreenShotWidget.ScreenShotMainWidget(self)
         widget.show()
         widget.setFixedSize(QSize(widget.total_width, widget.max_height)) #must invoke after show() function.
 

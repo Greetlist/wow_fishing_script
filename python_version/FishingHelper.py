@@ -6,13 +6,12 @@ import cv2
 import numpy as np
 import sys
 import datetime as dt
-from threading import Lock
 
 class FishingHelper:
     def __init__(self, functional_config, capture_area_coordinate) -> None:
         self.wow_window_name = "魔兽世界" # need to be utf-8
         self.wow_window = None
-        self.windown_rect = dict()
+        assert self.init(), "Init Not Success"
 
         # core member
         self.last_float_area = 0
@@ -20,11 +19,11 @@ class FishingHelper:
         self.last_mid_y = 0
         self.fish_float_x = 0
         self.fish_float_y = 0
-        self.stop = True
         self.wait_bite_time = 0.1 # unit: second
         self.last_cast_time = 0
 
-        self.stop_lock = Lock()
+        self.start_fishing_time = 0
+        self.tolerate_time = 20 #second
 
         self.init_functional_config(functional_config)
         self.init_capture_area(capture_area_coordinate)
@@ -58,35 +57,25 @@ class FishingHelper:
         if self.wow_window is None:
             print("Cannot find window name: {}".format(self.wow_window_name))
             return False
-        left, top, right, bottom = win32gui.GetWindowRect(self.wow_window)
-        self.windown_rect['left'] = left
-        self.windown_rect['top'] = top
-        self.windown_rect['right'] = right
-        self.windown_rect['bottom'] = bottom
-        print('Windown rect is : {}'.format(self.windown_rect))
         return True
 
     def start(self):
         while True:
             self.cast_some_skill()
             self.start_fishing()
-            while not self.is_bite_hook():
+            while not self.is_over_tolerate_time() and not self.is_bite_hook():
                 time.sleep(self.wait_bite_time)
             while not self.is_wow_foreground_window():
                 time.sleep(self.enable_to_work_time)
             self.get_fish()
             self.reset_all_condition()
-            self.stop_lock.acquire()
-            if self.stop:
-                self.stop_lock.release()
-                return
-            self.stop_lock.release()
             time.sleep(self.rest_time)
 
     def start_fishing(self):
         if not self.is_wow_foreground_window():
             time.sleep(5)
         pyautogui.press('1') # bind fish skill to main ```action-bar``` number 1
+        self.start_fishing_time = time.time()
         time.sleep(2) # sleep for a while to find fish_float
         self.find_fish_float()
 
@@ -128,7 +117,7 @@ class FishingHelper:
     # (low_hsv, hight_hsv) color need adjust during enviroment or weather changed.
     def get_frame_contours(self, frame_img):
         img_hsv = cv2.cvtColor(frame_img, cv2.COLOR_BGR2HSV)
-        low_hsv = np.array([0, 35, 0])
+        low_hsv = np.array([0, 65, 0])
         high_hsv = np.array([10, 255, 255])
         img_mask = cv2.inRange(img_hsv, low_hsv, high_hsv)
         img_morph = img_mask.copy()
@@ -166,17 +155,12 @@ class FishingHelper:
         contour = self.get_frame_contours(cur_img)
         cur_moments = cv2.moments(contour)
         if cur_moments['m00'] != 0:
-            self.fish_float_x = int(cur_moments['m10'] / cur_moments['m00']) + self.capture_left
+            self.fish_float_x = self.capture_left + int(cur_moments['m10'] / cur_moments['m00'])
             self.fish_float_y = self.capture_top + int(cur_moments['m01'] / cur_moments['m00'])
 
     def get_fish(self):
         pyautogui.click(self.fish_float_x, self.fish_float_y)
         pyautogui.rightClick(self.fish_float_x, self.fish_float_y)
-
-    def stop(self):
-        self.stop_lock.acquire()
-        self.stop = True
-        self.stop_lock.release()
 
     def is_wow_foreground_window(self):
         return win32gui.GetForegroundWindow() == self.wow_window
@@ -187,8 +171,21 @@ class FishingHelper:
             self.last_cast_time = time.time()
             time.sleep(self.enable_to_work_time)
 
+    def is_over_tolerate_time(self):
+        return time.time() - self.start_fishing_time > self.tolerate_time
+
+    def test_capture(self):
+        main_screen_region = (
+            self.capture_left,
+            self.capture_top,
+            self.capture_width,
+            self.capture_height,
+        )
+        cur_screenshot = pyautogui.screenshot(region=main_screen_region)
+        return cur_screenshot
+
     def test(self):
         for i in range(0, 75):
-            cur_img = self.capture_main_fishing_screen()
+            cur_img = self.test_capture()
             cur_img.save('imgs/test_{}.png'.format(i))
-            time.sleep(0.1)
+            time.sleep(1)
