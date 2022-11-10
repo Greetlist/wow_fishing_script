@@ -21,6 +21,7 @@ class MainView(QWidget):
         self.stop_button = QPushButton("Stop")
         self.stop_button.setCheckable(True)
         self.stop_button.clicked.connect(self.stop_fishing)
+        self.stop_button.setEnabled(False)
 
         self.g_layout = QGridLayout()
         self.setLayout(self.g_layout)
@@ -37,6 +38,7 @@ class MainView(QWidget):
         self.fish_thread.start()
         self.start_button.setText("Fishing")
         self.start_button.setEnabled(False)
+        self.stop_button.setEnabled(True)
 
     def stop_fishing(self):
         if self.fish_thread.isRunning():

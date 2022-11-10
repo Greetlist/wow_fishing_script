@@ -1,11 +1,8 @@
 import win32gui
 import pyautogui
-import os
 import time
 import cv2
 import numpy as np
-import sys
-import datetime as dt
 
 class FishingHelper:
     def __init__(self, functional_config, capture_area_coordinate) -> None:
@@ -36,6 +33,7 @@ class FishingHelper:
         self.float_area_changed_threshold = 45
         self.float_coordinate_changed_threshold = float(functional_config['float_coordinate_changed_threshold'])
         self.cast_period = functional_config['cast_period'] # unit: second
+        self.is_test = functional_config['is_test']
 
     def init_capture_area(self, capture_area_coordinate):
         self.capture_left = capture_area_coordinate['left']

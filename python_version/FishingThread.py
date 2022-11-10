@@ -6,4 +6,7 @@ class FishingThread(QThread):
         self.fishing_helper = fishing_helper
 
     def run(self):
-        self.fishing_helper.start()
+        if self.fishing_helper.is_test:
+            self.fishing_helper.test()
+        else:
+            self.fishing_helper.start()

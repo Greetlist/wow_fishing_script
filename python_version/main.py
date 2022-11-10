@@ -1,18 +1,13 @@
-import window_operation
+from ui import MainView
+from PySide6.QtWidgets import QApplication
 import argh
+import sys
 
 def run():
-    helper = window_operation.WindowsHelper()
-    if not helper.init():
-        return
-    helper.start()
-
-def test():
-    helper = window_operation.WindowsHelper(is_test=True)
-    if not helper.init():
-        print("Cannot init, Exit")
-        return
-    helper.test()
+    app = QApplication(sys.argv)
+    gui = MainView.MainView()
+    gui.resize_and_show()
+    sys.exit(app.exec_())
 
 if __name__ == "__main__":
-    argh.dispatch_commands([run, test])
+    argh.dispatch_commands([run])

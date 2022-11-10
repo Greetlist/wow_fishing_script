@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QWidget, QMenu
 from PySide6.QtGui import QPixmap, QGuiApplication
 from PySide6.QtGui import QPainter, QColor, QPen
 from PySide6.QtGui import QCursor, QAction, QIcon
+import os
 
 class ScreenShotMainWidget(QWidget):
     def __init__(self, parent=None):
@@ -12,6 +13,7 @@ class ScreenShotMainWidget(QWidget):
         self.init_window()
         self.init_screenshot_menu()
         self.mouse_press = False
+        self.is_cancel = False
 
     def capture_total_screen(self):
         total_screens = QGuiApplication.screens() #main screen's index is 0
@@ -40,10 +42,15 @@ class ScreenShotMainWidget(QWidget):
 
     def init_screenshot_menu(self):
         self.menu = QMenu(self)
-        confirm_action = QAction(QIcon('static/check.png'), "Confirm", self)
+        static_img_path = os.path.join(os.path.dirname(__file__), 'static')
+        confirm_action = QAction(QIcon('{}/confirm.png'.format(static_img_path)), "Confirm", self)
         confirm_action.setCheckable(True)
         confirm_action.triggered.connect(self.finish_screenshot)
+        cancel_action = QAction(QIcon('{}/cancel.png'.format(static_img_path)), "Cancel", self)
+        cancel_action.setCheckable(True)
+        cancel_action.triggered.connect(self.cancel_screenshot)
         self.menu.addAction(confirm_action)
+        self.menu.addAction(cancel_action)
 
     def paintEvent(self, e):
         painter = QPainter(self)
@@ -78,10 +85,11 @@ class ScreenShotMainWidget(QWidget):
     def keyPressEvent(self, e):
         if (e.key() == Qt.Key_Escape):
             print('Press Escape, Close')
-            self.close()
-        elif (e.key() == Qt.Key_Return):
-            print('Press Enter, Finish ScreenShot')
-            self.close()
+            self.cancel_screenshot()
+
+    def cancel_screenshot(self):
+        self.is_cancel = True
+        self.close()
 
     def mousePressEvent(self, e):
         self.mouse_press = True
@@ -115,4 +123,5 @@ class ScreenShotMainWidget(QWidget):
         }
 
     def closeEvent(self, e):
-        self.parent.set_edit_data(self.get_captured_pixmap_rect())
+        if not self.is_cancel:
+            self.parent.set_edit_data(self.get_captured_pixmap_rect())
