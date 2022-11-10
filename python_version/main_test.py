@@ -1,4 +1,4 @@
-from tkinter import Frame
+# encoding: utf-8
 from turtle import position
 import cv2
 import os
@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image
 import pyautogui
 import win32api
+import win32gui
 import win32con
 import time
 from ui import MainView
@@ -326,10 +327,22 @@ def test_qt():
     gui.resize_and_show()
     sys.exit(app.exec_())
 
+def test_send_key():
+    window_name = "test.txt - 记事本"
+    target_window = win32gui.FindWindow(None, window_name)
+    #child_window = win32gui.GetWindow(target_window, win32con.GW_CHILD)
+
+    for i in range(100):
+        #win32gui.PostMessage(child_window, win32con.WM_KEYDOWN, 0x31, 0)
+        #win32gui.PostMessage(child_window, win32con.WM_KEYUP, 0x31, 0)
+        win32gui.PostMessage(target_window, win32con.WM_CHAR, 0x31, 0)
+        time.sleep(1)
+
 if __name__ == '__main__':
     argh.dispatch_commands([
         test_total,
         test_mask_img,
         get_mouse_position,
         test_qt,
+        test_send_key,
     ])

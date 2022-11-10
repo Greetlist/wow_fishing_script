@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QWidget, QLineEdit, QLabel, QGridLayout
 from PySide6.QtWidgets import QGridLayout, QCheckBox, QFrame, QDoubleSpinBox
-from PySide6.QtGui import QDoubleValidator
 from PySide6.QtCore import Qt
 
 class FunctionalView(QWidget):
@@ -12,27 +11,27 @@ class FunctionalView(QWidget):
         self.g_layout = QGridLayout()
         self.setLayout(self.g_layout)
         self.functional_check_box_dict = {
-            'is_test': QCheckBox("Test Mode", self),
-            'cast_periodically': QCheckBox("Random Cast", self),
-            'use_coordinate': QCheckBox("Coordinate", self),
+            'is_test': {'widget': QCheckBox("Test Mode", self), 'row': 0, 'col': 0},
+            'is_cast_periodically': {'widget': QCheckBox("Random Cast", self), 'row': 0, 'col': 1},
+            'is_foreground': {'widget': QCheckBox("Running Mode", self), 'row': 1, 'col': 0},
+            'use_coordinate': {'widget': QCheckBox("Coordinate", self), 'row': 1, 'col': 1},
         }
         self.functional_value_input_dict = {
-            'enable_to_work_time': (QLabel('StartToWorkTime: '), QDoubleSpinBox(self), 5.0),
-            'rest_time': (QLabel('RestTime: '), QDoubleSpinBox(self), 1.0),
-            'float_coordinate_changed_threshold': (QLabel('Threshold: '), QDoubleSpinBox(self), 40.0),
-            'cast_period': (QLabel('Period: '), QDoubleSpinBox(self), 60.0),
+            'enable_to_work_time': (QLabel('StartToWorkTime(s): '), QDoubleSpinBox(self), 5.0),
+            'rest_time': (QLabel('RestTime(s): '), QDoubleSpinBox(self), 1.0),
+            'float_coordinate_changed_threshold': (QLabel('Threshold(s): '), QDoubleSpinBox(self), 40.0),
+            'cast_period': (QLabel('Cast Period(s): '), QDoubleSpinBox(self), 60.0),
         }
-        col = 0
-        for _, check_box in self.functional_check_box_dict.items():
-            self.g_layout.addWidget(check_box, 0, col)
-            col += 1
-        row = 1
+        for _, check_box_info in self.functional_check_box_dict.items():
+            check_box = check_box_info['widget']
+            row = check_box_info['row']
+            col = check_box_info['col']
+            self.g_layout.addWidget(check_box, row, col)
+        row = 2
         for _, t in self.functional_value_input_dict.items():
             label, edit, default_value = t[0], t[1], t[2]
             label.setFrameShadow(QFrame.Raised)
             label.setBuddy(edit)
-            #validator = QDoubleValidator(self)
-            #edit.setValidator(validator)
             edit.setValue(default_value)
             edit.setMinimum(1.0)
             edit.setMaximum(3600.0)
