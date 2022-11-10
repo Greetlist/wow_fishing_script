@@ -27,7 +27,7 @@ class FishingHelper:
 
     def init_key_binding(self):
         self.fish_key = 0x31 #key_board 1
-        self.get_fish_key = 0x32 #key_board 2
+        self.get_fish_key = 0x39 #key_board 9
         self.skill_1 = 0x36 #key_board 6
         self.skill_2 = 0x37 #key_board 7
         self.skill_3 = 0x38 #key_board 8
@@ -88,7 +88,8 @@ class FishingHelper:
             # bind fish skill to main ```action-bar``` number 1
             pyautogui.press('1')
         else:
-            win32gui.PostMessage(self.wow_window, win32con.WM_CHAR, self.fish_key, 0)
+            win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, self.fish_key, 0)
+            win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, self.fish_key, 0)
         self.start_fishing_time = time.time()
         time.sleep(2) # sleep for a while to find fish_float
         self.find_fish_float()
@@ -150,7 +151,6 @@ class FishingHelper:
                 'height': int(self.capture_height),
                 'mon': 0 # all monitor
             }
-            print(capture_info)
             cur_screenshot = sct.grab(capture_info)
         #remember to convert data type
         cur_captured_img = cv2.cvtColor(np.array(cur_screenshot), cv2.COLOR_RGB2BGR)
@@ -169,7 +169,8 @@ class FishingHelper:
             pyautogui.click(self.fish_float_x, self.fish_float_y)
             pyautogui.rightClick(self.fish_float_x, self.fish_float_y)
         else:
-            win32gui.PostMessage(self.wow_window, win32con.WM_CHAR, self.get_fish_key, 0)
+            win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, self.get_fish_key, 0)
+            win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, self.get_fish_key, 0)
 
     def is_wow_foreground_window(self):
         return win32gui.GetForegroundWindow() == self.wow_window
@@ -179,7 +180,8 @@ class FishingHelper:
             if self.is_foreground:
                 pyautogui.press('6')
             else:
-                win32gui.PostMessage(self.wow_window, win32con.WM_CHAR, self.skill_1, 0)
+                win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, self.skill_1, 0)
+                win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, self.skill_1, 0)
             self.last_cast_time = time.time()
             time.sleep(self.enable_to_work_time)
 

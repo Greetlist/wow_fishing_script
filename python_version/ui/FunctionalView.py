@@ -17,7 +17,7 @@ class FunctionalView(QWidget):
         self.functional_check_box_dict = {
             'is_test': (QCheckBox("Test Mode", self), 1, 0),
             'is_cast_periodically': (QCheckBox("Random Cast", self), 1, 1),
-            'is_foreground': (QCheckBox("Running Mode", self), 2, 0),
+            'is_foreground': (QCheckBox("ForeGround", self), 2, 0),
             'use_coordinate': (QCheckBox("Coordinate", self), 2, 1),
         }
         for _, check_box_info in self.functional_check_box_dict.items():

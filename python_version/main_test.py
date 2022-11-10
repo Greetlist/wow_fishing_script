@@ -328,14 +328,17 @@ def test_qt():
     sys.exit(app.exec_())
 
 def test_send_key():
-    window_name = "test.txt - 记事本"
+    window_name = "魔兽世界"
     target_window = win32gui.FindWindow(None, window_name)
-    #child_window = win32gui.GetWindow(target_window, win32con.GW_CHILD)
+    child_window = win32gui.GetWindow(target_window, win32con.GW_CHILD)
+    print(target_window, child_window)
 
     for i in range(100):
         #win32gui.PostMessage(child_window, win32con.WM_KEYDOWN, 0x31, 0)
         #win32gui.PostMessage(child_window, win32con.WM_KEYUP, 0x31, 0)
-        win32gui.PostMessage(target_window, win32con.WM_CHAR, 0x31, 0)
+        #win32gui.PostMessage(child_window, win32con.WM_CHAR, 0x31, 0)
+        win32gui.PostMessage(target_window, win32con.WM_KEYDOWN, 0x31, 0)
+        win32gui.PostMessage(target_window, win32con.WM_KEYUP, 0x31, 0)
         time.sleep(1)
 
 if __name__ == '__main__':
