@@ -47,7 +47,6 @@ class MainView(QWidget):
             self.stop_button.setEnabled(False)
             self.fish_thread.wait()
             self.stop_button.setText("Stop")
-            self.stop_button.setEnabled(True)
             self.start_button.setText("Start Fishing")
             self.start_button.setEnabled(True)
 

@@ -19,8 +19,10 @@ class ScreenShotMainWidget(QWidget):
         total_screens = QGuiApplication.screens() #main screen's index is 0
         self.max_height = 0
         self.total_width = 0
+        self.total_screen_geometry_list = list()
         for screen in total_screens:
             screen_rect = screen.geometry()
+            self.total_screen_geometry_list.append(screen_rect)
             self.max_height = max(self.max_height, screen_rect.height())
             self.total_width += screen_rect.width()
 
@@ -122,6 +124,35 @@ class ScreenShotMainWidget(QWidget):
             'height': bottom - top,
         }
 
+    def calc_screen_index_and_rect(self):
+        left, top, right, bottom = self.calc_real_rect()
+        screen_index = 0
+        screen_len = len(self.total_screen_geometry_list)
+        accumulation_left = 0
+        res = {
+            'monitor_index': -1,
+            'left': 0,
+            'top': top,
+            'right': 0,
+            'bottom': bottom,
+            'width': right - left,
+            'height': bottom - top,
+        }
+        for i in range(screen_len):
+            cur_screen_x_start = self.total_screen_geometry_list[i].left()
+            cur_screen_x_end = self.total_screen_geometry_list[i].left() + self.total_screen_geometry_list[i].width()
+            if left >= cur_screen_x_start and right <= cur_screen_x_end:  # in current monitor
+                res['monitor_index'] = i
+                res['left'] = left - accumulation_left
+                res['right'] = res['left'] + self.total_screen_geometry_list[i].width()
+                break
+            elif left >= cur_screen_x_end and right >= cur_screen_x_end:  # move to next monitor
+                accumulation_left += self.total_screen_geometry_list[i].width()
+            elif left >= cur_screen_x_start and right > cur_screen_x_end:  # cross monitor
+                assert False, 'Only Support Select Area in one monitor'
+        return res
+
     def closeEvent(self, e):
         if not self.is_cancel:
             self.parent.set_edit_data(self.get_captured_pixmap_rect())
+            self.parent.set_monitor_index_data(self.calc_screen_index_and_rect())

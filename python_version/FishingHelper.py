@@ -4,9 +4,13 @@ import pyautogui
 import time
 import cv2
 import numpy as np
+import mss
 
 class FishingHelper:
     def __init__(self, functional_config, capture_area_coordinate) -> None:
+        self.init_functional_config(functional_config)
+        self.init_capture_area(capture_area_coordinate)
+        self.init_key_binding()
         assert self.init(), "Init Not Success"
 
         # core member
@@ -20,9 +24,6 @@ class FishingHelper:
 
         self.start_fishing_time = 0
         self.tolerate_time = 20 #second
-
-        self.init_functional_config(functional_config)
-        self.init_capture_area(capture_area_coordinate)
 
     def init_key_binding(self):
         self.fish_key = 0x31 #key_board 1
@@ -141,13 +142,16 @@ class FishingHelper:
         return c
 
     def capture_main_fishing_screen(self):
-        main_screen_region = (
-            self.capture_left,
-            self.capture_top,
-            self.capture_width,
-            self.capture_height,
-        )
-        cur_screenshot = pyautogui.screenshot(region=main_screen_region)
+        with mss.mss() as sct:
+            capture_info = {
+                'left': int(self.capture_left),
+                'top': int(self.capture_top),
+                'width': int(self.capture_width),
+                'height': int(self.capture_height),
+                'mon': 0 # all monitor
+            }
+            print(capture_info)
+            cur_screenshot = sct.grab(capture_info)
         #remember to convert data type
         cur_captured_img = cv2.cvtColor(np.array(cur_screenshot), cv2.COLOR_RGB2BGR)
         return cur_captured_img
@@ -183,17 +187,20 @@ class FishingHelper:
         return time.time() - self.start_fishing_time > self.tolerate_time
 
     def test_capture(self):
-        main_screen_region = (
-            self.capture_left,
-            self.capture_top,
-            self.capture_width,
-            self.capture_height,
-        )
-        cur_screenshot = pyautogui.screenshot(region=main_screen_region)
-        return cur_screenshot
+        with mss.mss() as sct:
+            capture_info = {
+                'left': int(self.capture_left),
+                'top': int(self.capture_top),
+                'width': int(self.capture_width),
+                'height': int(self.capture_height),
+                'mon': 0 # all monitor
+            }
+            print(capture_info)
+            cur_screenshot = sct.grab(capture_info)
+            return cur_screenshot
 
     def test(self):
         for i in range(0, 75):
             cur_img = self.test_capture()
-            cur_img.save('imgs/test_{}.png'.format(i))
+            mss.tools.to_png(cur_img.rgb, cur_img.size, output='imgs/test_{}.png'.format(i))
             time.sleep(1)

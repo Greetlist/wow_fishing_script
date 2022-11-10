@@ -3,3 +3,4 @@ opencv-python
 pywin32
 pyautogui
 PySide6
+mss

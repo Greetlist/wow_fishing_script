@@ -20,7 +20,6 @@ class ScreenShotCoordinateView(QWidget):
     def init_button(self):
         self.rect_button = QPushButton("Get Fish Area")
         self.rect_button.setCheckable(True)
-        #self.rect_button.clicked.connect(self.determine_rect)
         self.rect_button.clicked.connect(self.show_screenshot_dialog)
 
     def show_screenshot_dialog(self):
@@ -50,6 +49,12 @@ class ScreenShotCoordinateView(QWidget):
         for data_str, _ in self.edit_dict.items():
             self.edit_dict[data_str]['real_data'] = data_dict[data_str]
             self.edit_dict[data_str]['edit_instance'].setText(str(data_dict[data_str]))
+
+    def set_monitor_index_data(self, data_dict):
+        self.monitor_data = data_dict
+    
+    def get_monitor_index_data(self):
+        return self.monitor_data
 
     def get_capture_coordinate(self):
         res = {}
