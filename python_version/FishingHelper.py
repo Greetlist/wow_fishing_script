@@ -132,7 +132,7 @@ class FishingHelper:
     # (low_hsv, hight_hsv) color need adjust during environment or weather changed.
     def get_frame_contours(self, frame_img):
         img_hsv = cv2.cvtColor(frame_img, cv2.COLOR_BGR2HSV)
-        low_hsv = np.array([0, 65, 0])
+        low_hsv = np.array([0, 35, 0])
         high_hsv = np.array([10, 255, 255])
         img_mask = cv2.inRange(img_hsv, low_hsv, high_hsv)
         img_morph = img_mask.copy()
@@ -153,7 +153,8 @@ class FishingHelper:
             }
             cur_screenshot = sct.grab(capture_info)
         #remember to convert data type
-        cur_captured_img = cv2.cvtColor(np.array(cur_screenshot), cv2.COLOR_RGB2BGR)
+        #cur_captured_img = cv2.cvtColor(np.array(cur_screenshot), cv2.COLOR_RGB2BGR)
+        cur_captured_img = np.array(cur_screenshot)
         return cur_captured_img
 
     def find_fish_float(self):
