@@ -28,9 +28,9 @@ class FishingHelper:
     def init_key_binding(self):
         self.fish_key = 0x31 #key_board 1
         self.get_fish_key = 0x32 #key_board 2
-        self.skill_1 = 0x37 #key_board 7
-        self.skill_2 = 0x38 #key_board 8
-        self.skill_3 = 0x39 #key_board 9
+        self.skill_1 = 0x36 #key_board 6
+        self.skill_2 = 0x37 #key_board 7
+        self.skill_3 = 0x38 #key_board 8
 
     def init_functional_config(self, functional_config):
         self.wow_window_name = functional_config['wow_window_name'] # need to be utf-8
@@ -75,18 +75,18 @@ class FishingHelper:
             self.start_fishing()
             while not self.is_over_tolerate_time() and not self.is_bite_hook():
                 time.sleep(self.wait_bite_time)
-            while not self.is_wow_foreground_window():
+            while self.is_foreground and not self.is_wow_foreground_window():
                 time.sleep(self.enable_to_work_time)
             self.get_fish()
             self.reset_all_condition()
             time.sleep(self.rest_time)
 
     def start_fishing(self):
-        if not self.is_wow_foreground_window():
-            time.sleep(5)
-        # bind fish skill to main ```action-bar``` number 1
         if self.is_foreground:
-             pyautogui.press('1')
+            if not self.is_wow_foreground_window():
+                time.sleep(5)
+            # bind fish skill to main ```action-bar``` number 1
+            pyautogui.press('1')
         else:
             win32gui.PostMessage(self.wow_window, win32con.WM_CHAR, self.fish_key, 0)
         self.start_fishing_time = time.time()
