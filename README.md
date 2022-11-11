@@ -1,14 +1,19 @@
+- [OverView](#overview)
 - [How To Build It](#how-to-build-it)
   - [python version](#python-version)
     - [Build From Source](#build-from-source)
     - [Download Binary](#download-binary)
   - [c++ version](#c-version)
-- [How To Run It](#how-to-run-it)
-  - [UI](#ui)
+- [How To Use It](#how-to-use-it)
 - [Core Config](#core-config)
 - [TODO List](#todo-list)
+- [Report Bug And Advice](#report-bug-and-advice)
 - [Relate Tools And Repo](#relate-tools-and-repo)
 - [Useful WebSite](#useful-website)
+
+# OverView
+Auto Fising Script with GUI.
+Rate of success catching fishing is over **90%**.
 
 # How To Build It
 ## python version
@@ -30,7 +35,7 @@ TODO
 
 [BackGround Example GIF](https://1drv.ms/u/s!ArufjyMgeESVgc9zOjW1tHBFcisxEA?e=Zh2iTy)
 
-> Notice: BackGround Mode need 3 prepare work before fishing
+> Notice: BackGround Mode need 3 prepare works before fishing
 1. Turn Interact On
 
 ![Turn On](https://img.ppcn.net/uploadfile/2022/1028/20221028153852683.png)
@@ -42,7 +47,7 @@ TODO
 /console SoftTargetInteractRange 50   # increase your interact range to 50
 ```
 
-3. Bind interact key to '9'
+3. Bind interact key to **'9'**
 
 ![Interact Key Setting](https://olimg.3dmgame.com/uploads/images/raiders/2022/0830/1661822926765.png)
 
@@ -51,7 +56,7 @@ TODO
 2. Game Window Name. (Adjust different language)
 3. Fishing Idle Time.
 4. Cast Some Skill Periodically. (Jump or something else)
-5. Switch To TestMode. (Take Some Screenshot for testing)
+5. Switch To TestMode. (Take some screenshot for testing)
 6. Switch To FG/BG Mode. (BG Mode allow you to do something else while WOW window is inactive)
 7. Use Coordinate judgement or Area Judgement. (Coordinate Judgement is more stable while testing in real game)
 
@@ -59,8 +64,11 @@ TODO
 - [ ] Support invoke some WOW's Macro before fishing.
 - [ ] Add fishing count config.
 - [ ] Auto Online/Offline.
-- [ ] Key Binding Configurable.
+- [ ] Key Binding configurable.
 - [ ] Auto change coordinate threshold. (Reinforcement)
+
+# Report Bug And Advice
+If you trapped with some unknown bugs or want to give some advice, Please [new issue](https://github.com/Greetlist/wow_fishing_script/issues/new/choose) to me.
 
 # Relate Tools And Repo
 [PySide6](https://doc.qt.io/qtforpython/#)
