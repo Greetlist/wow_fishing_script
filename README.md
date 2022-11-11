@@ -1,3 +1,12 @@
+- [How To Build It](#how-to-build-it)
+  - [python version](#python-version)
+    - [Build From Source](#build-from-source)
+    - [Download Binary](#download-binary)
+  - [c++ version](#c-version)
+- [How To Run It](#how-to-run-it)
+  - [UI](#ui)
+- [Relate Tools And Repo](#relate-tools-and-repo)
+- [Useful WebSite](#useful-website)
 # How To Build It
 ## python version
 ### Build From Source
@@ -20,16 +29,26 @@ TODO
 
 # Relate Tools And Repo
 [PySide6](https://doc.qt.io/qtforpython/#)
+
 [pywin32](https://github.com/mhammond/pywin32)
+
 [pyautogui](https://github.com/asweigart/pyautogui)
+
 [pyinstaller](https://github.com/pyinstaller/pyinstaller)
+
 [python-mss](https://github.com/BoboTiG/python-mss)
+
 [opencv-python](https://github.com/opencv/opencv-python)
 
 # Useful WebSite
 [MicroSoft Win32 API](https://learn.microsoft.com/en-us/windows/win32/)
+
 [PySide6 Tutorials](https://www.pythonguis.com/tutorials/)
+
 [pywin32 Online API](http://timgolden.me.uk/pywin32-docs/)
+
 [How-To-Send-Key-To-Inactive-Window](https://stackoverflow.com/questions/12996985/send-some-keys-to-inactive-window-with-python)
+
 [MicroSoft Win32 Virtual Key Binding](https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes)
+
 [HSV Color Range Switcher](https://stackoverflow.com/a/59906154/13747065)
