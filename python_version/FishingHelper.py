@@ -5,6 +5,8 @@ import time
 import cv2
 import numpy as np
 import mss
+from Logger import FishingLogger
+import traceback
 
 class FishingHelper:
     def __init__(self, functional_config, capture_area_coordinate) -> None:
@@ -28,6 +30,7 @@ class FishingHelper:
     def init_key_binding(self):
         self.fish_key = 0x31 #key_board 1
         self.get_fish_key = 0x39 #key_board 9
+        self.space_key = 0x20 #key_board_space
         self.skill_1 = 0x36 #key_board 6
         self.skill_2 = 0x37 #key_board 7
         self.skill_3 = 0x38 #key_board 8
@@ -45,6 +48,7 @@ class FishingHelper:
         self.is_cast_periodically = functional_config['is_cast_periodically'] # unit: second
         self.is_test = functional_config['is_test']
         self.is_foreground = functional_config['is_foreground']
+        self.float_offset = functional_config['float_offset']
 
     def init_capture_area(self, capture_area_coordinate):
         self.capture_left = capture_area_coordinate['left']
@@ -64,21 +68,24 @@ class FishingHelper:
     def init(self):
         self.wow_window = win32gui.FindWindow(None, self.wow_window_name)
         if self.wow_window is None:
-            print("Cannot find window name: {}".format(self.wow_window_name))
+            FishingLogger.error("Cannot find window name: {}".format(self.wow_window_name))
             return False
         return True
 
     def start(self):
         while True:
-            if self.is_cast_periodically:
-                self.cast_some_skill()
-            self.start_fishing()
-            while not self.is_over_tolerate_time() and not self.is_bite_hook():
-                time.sleep(self.wait_bite_time)
-            while self.is_foreground and not self.is_wow_foreground_window():
-                time.sleep(self.enable_to_work_time)
-            self.get_fish()
-            self.reset_all_condition()
+            try:
+                if self.is_cast_periodically:
+                    self.cast_some_skill()
+                self.start_fishing()
+                while not self.is_over_tolerate_time() and not self.is_bite_hook():
+                    time.sleep(self.wait_bite_time)
+                while self.is_foreground and not self.is_wow_foreground_window():
+                    time.sleep(self.enable_to_work_time)
+                self.get_fish()
+                self.reset_all_condition()
+            except Exception as e:
+                FishingLogger.error(traceback.format_exc())
             time.sleep(self.rest_time)
 
     def start_fishing(self):
@@ -99,7 +106,7 @@ class FishingHelper:
         cur_contour = self.get_frame_contours(cur_img)
         cur_area = cv2.contourArea(cur_contour)
         if self.use_area:
-            print(
+            FishingLogger.info(
                 'last_area: [{}], cur_area: [{}], abs(last - cur): [{}]'.format(
                     self.last_float_area,
                     cur_area,
@@ -117,7 +124,7 @@ class FishingHelper:
                 cur_y = int(cur_moments['m01'] / cur_moments['m00'])
                 abs_sub_x = abs(self.last_mid_x - cur_x)
                 abs_sub_y = abs(self.last_mid_y - cur_y)
-                print(
+                FishingLogger.info(
                     'last_x: {}, last_y: {}, cur_x: {}, cur_y: {}, abs(sub_x): [{}], abs(sub_y): [{}]'.format(
                         self.last_mid_x, self.last_mid_y, cur_x, cur_y, abs_sub_x, abs_sub_y
                     )
@@ -162,8 +169,8 @@ class FishingHelper:
         contour = self.get_frame_contours(cur_img)
         cur_moments = cv2.moments(contour)
         if cur_moments['m00'] != 0:
-            self.fish_float_x = self.capture_left + int(cur_moments['m10'] / cur_moments['m00'])
-            self.fish_float_y = self.capture_top + int(cur_moments['m01'] / cur_moments['m00'])
+            self.fish_float_x = self.capture_left + int(cur_moments['m10'] / cur_moments['m00']) + self.float_offset
+            self.fish_float_y = self.capture_top + int(cur_moments['m01'] / cur_moments['m00']) + self.float_offset
 
     def get_fish(self):
         if self.is_foreground:
@@ -178,11 +185,15 @@ class FishingHelper:
 
     def cast_some_skill(self):
         if self.last_cast_time == 0 or time.time() - self.last_cast_time > self.cast_period:
-            if self.is_foreground:
-                pyautogui.press('6')
-            else:
-                win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, self.skill_1, 0)
-                win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, self.skill_1, 0)
+            key_press_list = ['space', '6'] if self.is_foreground else [self.space_key, self.skill_1]
+            for key in key_press_list:
+                if self.is_foreground:
+                    pyautogui.press(key)
+                    time.sleep(self.rest_time)
+                else:
+                    win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, key, 0)
+                    win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, key, 0)
+                    time.sleep(self.rest_time)
             self.last_cast_time = time.time()
             time.sleep(self.enable_to_work_time)
 
@@ -198,7 +209,6 @@ class FishingHelper:
                 'height': int(self.capture_height),
                 'mon': 0 # all monitor
             }
-            print(capture_info)
             cur_screenshot = sct.grab(capture_info)
             return cur_screenshot
 
@@ -206,4 +216,5 @@ class FishingHelper:
         for i in range(0, 75):
             cur_img = self.test_capture()
             mss.tools.to_png(cur_img.rgb, cur_img.size, output='imgs/test_{}.png'.format(i))
+            FishingLogger.info("Success capture screenshot, and save to path: {}".format('imgs/test_{}.png'.format(i)))
             time.sleep(1)

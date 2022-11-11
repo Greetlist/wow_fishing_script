@@ -1,14 +1,16 @@
 from ui import ScreenShotCoordinateView
 from ui import FunctionalView
 import FishingHelper
-from PySide6.QtWidgets import QWidget, QPushButton, QGridLayout
+from PySide6.QtWidgets import QWidget, QPushButton, QGridLayout, QTextBrowser
 from PySide6.QtCore import QSize, QThread
 import FishingThread
+import LogFetcherThread
 
 class MainView(QWidget):
     def __init__(self, parent=None):
         super().__init__()
         self.init_child_widget()
+        self.init_log_fetch_thread()
 
     def init_child_widget(self):
         self.screeshot_view = ScreenShotCoordinateView.ScreenShotCoordinateView(self)
@@ -29,6 +31,9 @@ class MainView(QWidget):
         self.g_layout.addWidget(self.functional_view, 0, 1)
         self.g_layout.addWidget(self.start_button, 1, 0)
         self.g_layout.addWidget(self.stop_button, 1, 1)
+
+        self.log_browser = QTextBrowser()
+        self.g_layout.addWidget(self.log_browser, 2, 0, 1, 4)
 
     def start_fishing(self):
         functional_config = self.functional_view.get_all_config_data()
@@ -51,5 +56,17 @@ class MainView(QWidget):
             self.start_button.setEnabled(True)
 
     def resize_and_show(self):
+        self.setWindowTitle("Auto Fishing")
         self.show()
-        self.setFixedSize(QSize(500, 400))
+        self.setFixedSize(QSize(600, 400))
+
+    def init_log_fetch_thread(self):
+        self.log_fetch_thread = LogFetcherThread.LogFetcherThread(self)
+        self.log_fetch_thread.start()
+
+    def append_text(self, text):
+        if text is not None:
+            self.log_browser.append(text)
+
+    def closeEvent(self, e):
+        self.log_fetch_thread.terminate()

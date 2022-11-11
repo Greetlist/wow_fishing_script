@@ -10,4 +10,4 @@ def run():
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
-    argh.dispatch_commands([run])
+    argh.dispatch_command(run)

@@ -1,2 +1,6 @@
 __pycache__/
 *.png
+*.log
+dist/
+build/
+imgs/

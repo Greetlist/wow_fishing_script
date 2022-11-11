@@ -2,6 +2,7 @@ toc
 
 # How To Make It Work
 ## python version
+### Build From Source
 1. win10 Operating System
 2. Download ```python3``` from **MicroSoft Store**, version(3.10)
 3. Download ```vs code``` from **MicroSoft Store**
@@ -13,6 +14,8 @@ toc
 9. run script ```python3 main.py run```
 10. switch back to your game
 11. enjoy auto fishing while taking sleep
+
+### Download Binary
 
 ## c++ version
 TODO

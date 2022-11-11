@@ -31,6 +31,7 @@ class FunctionalView(QWidget):
             'rest_time': (QLabel('RestTime(s): '), QDoubleSpinBox(self), 1.0, 5),
             'float_coordinate_changed_threshold': (QLabel('Threshold(s): '), QDoubleSpinBox(self), 40.0, 6),
             'cast_period': (QLabel('Cast Period(s): '), QDoubleSpinBox(self), 60.0, 7),
+            'float_offset': (QLabel('Float Offset(pix): '), QDoubleSpinBox(self), 10, 8),
         }
         for _, t in self.functional_value_input_dict.items():
             label, edit, default_value, row = t[0], t[1], t[2], t[3]
