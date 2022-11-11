@@ -26,25 +26,32 @@
 TODO
 
 # How To Use It
-## UI
-[ForeGround Example](https://1drv.ms/u/s!ArufjyMgeESVgc9xulOQ0l8vUSvggg?e=roihca)
-[BackGround Example](https://1drv.ms/u/s!ArufjyMgeESVgc9zWQXLlBx0YSuEzw?e=IJJqge)
+[ForeGround Example GIF](https://1drv.ms/u/s!ArufjyMgeESVgc9x5MZkED7NZo_KGQ?e=cW1eAh)
 
-> Notice: BackGround need execute these two macro before fishing and Bind interact key to '9'
+[BackGround Example GIF](https://1drv.ms/u/s!ArufjyMgeESVgc9zOjW1tHBFcisxEA?e=Zh2iTy)
+
+> Notice: BackGround Mode need 3 prepare work before fishing
+1. Turn Interact On
+
+![Turn On](https://img.ppcn.net/uploadfile/2022/1028/20221028153852683.png)
+
+2. execute these two macro
 
 ```
 /console SoftTargetInteractArc 2      # allowed you to interact without facing things
 /console SoftTargetInteractRange 50   # increase your interact range to 50
 ```
 
-![Interact Key Setting](https://1drv.ms/u/s!ArufjyMgeESVgc9yWnS1WWvchxQhKA?e=DOOu0h)
+3. Bind interact key to '9'
+
+![Interact Key Setting](https://olimg.3dmgame.com/uploads/images/raiders/2022/0830/1661822926765.png)
 
 # Core Config
-1. Fishing area. (Coordinate of screen is auto-complte, support multi-screen, **not support cross-screen**)
+1. Fishing area. (Coordinate of screen is auto-complete, support multi-screen, **not support cross-screen**)
 2. Game Window Name. (Adjust different language)
 3. Fishing Idle Time.
-4. Cast Some Skill Periodically. (Jump)
-5. Switch To TestMode. (Take Some Screenshot)
+4. Cast Some Skill Periodically. (Jump or something else)
+5. Switch To TestMode. (Take Some Screenshot for testing)
 6. Switch To FG/BG Mode. (BG Mode allow you to do something else while WOW window is inactive)
 7. Use Coordinate judgement or Area Judgement. (Coordinate Judgement is more stable while testing in real game)
 
