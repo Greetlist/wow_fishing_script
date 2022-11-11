@@ -25,11 +25,22 @@
 ## c++ version
 TODO
 
-# How To Run It
+# How To Use It
 ## UI
+[ForeGround Example](https://1drv.ms/u/s!ArufjyMgeESVgc9xulOQ0l8vUSvggg?e=roihca)
+[BackGround Example](https://1drv.ms/u/s!ArufjyMgeESVgc9zWQXLlBx0YSuEzw?e=IJJqge)
+
+> Notice: BackGround need execute these two macro before fishing and Bind interact key to '9'
+
+```
+/console SoftTargetInteractArc 2      # allowed you to interact without facing things
+/console SoftTargetInteractRange 50   # increase your interact range to 50
+```
+
+![Interact Key Setting](https://1drv.ms/u/s!ArufjyMgeESVgc9yWnS1WWvchxQhKA?e=DOOu0h)
 
 # Core Config
-1. Fishing area. (Coordinate of screen is auto-complte, support multi-screen)
+1. Fishing area. (Coordinate of screen is auto-complte, support multi-screen, **not support cross-screen**)
 2. Game Window Name. (Adjust different language)
 3. Fishing Idle Time.
 4. Cast Some Skill Periodically. (Jump)
@@ -41,8 +52,8 @@ TODO
 - [ ] Support invoke some WOW's Macro before fishing.
 - [ ] Add fishing count config.
 - [ ] Auto Online/Offline.
+- [ ] Key Binding Configurable.
 - [ ] Auto change coordinate threshold. (Reinforcement)
-
 
 # Relate Tools And Repo
 [PySide6](https://doc.qt.io/qtforpython/#)

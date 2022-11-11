@@ -41,7 +41,7 @@ class FishingHelper:
         self.use_coordinate = functional_config['use_coordinate']
         self.use_area = not self.use_coordinate
         self.enable_to_work_time = functional_config['enable_to_work_time']  # unit: second
-        self.rest_time = functional_config['enable_to_work_time'] # unit: second
+        self.rest_time = functional_config['rest_time'] # unit: second
         self.float_area_changed_threshold = 45
         self.float_coordinate_changed_threshold = float(functional_config['float_coordinate_changed_threshold'])
         self.cast_period = functional_config['cast_period'] # unit: second
