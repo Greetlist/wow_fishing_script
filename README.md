@@ -5,8 +5,11 @@
   - [c++ version](#c-version)
 - [How To Run It](#how-to-run-it)
   - [UI](#ui)
+- [Core Config](#core-config)
+- [TODO List](#todo-list)
 - [Relate Tools And Repo](#relate-tools-and-repo)
 - [Useful WebSite](#useful-website)
+
 # How To Build It
 ## python version
 ### Build From Source
@@ -25,6 +28,20 @@ TODO
 # How To Run It
 ## UI
 
+# Core Config
+1. Fishing area. (Coordinate of screen is auto-complte, support multi-screen)
+2. Game Window Name. (Adjust different language)
+3. Fishing Idle Time.
+4. Cast Some Skill Periodically. (Jump)
+5. Switch To TestMode. (Take Some Screenshot)
+6. Switch To FG/BG Mode. (BG Mode allow you to do something else while WOW window is inactive)
+7. Use Coordinate judgement or Area Judgement. (Coordinate Judgement is more stable while testing in real game)
+
+# TODO List
+- [ ] Support invoke some WOW's Macro before fishing.
+- [ ] Add fishing count config.
+- [ ] Auto Online/Offline.
+- [ ] Auto change coordinate threshold. (Reinforcement)
 
 
 # Relate Tools And Repo
