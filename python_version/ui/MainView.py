@@ -39,7 +39,7 @@ class MainView(QWidget):
         functional_config = self.functional_view.get_all_config_data()
         capture_area_coordinate = self.screeshot_view.get_capture_coordinate()
         self.fishing_helper = FishingHelper.FishingHelper(functional_config, capture_area_coordinate)
-        self.fish_thread = FishingThread.FishingThread(self.fishing_helper)
+        self.fish_thread = FishingThread.FishingThread(self.fishing_helper, self)
         self.fish_thread.start()
         self.start_button.setText("Fishing")
         self.start_button.setEnabled(False)
@@ -54,6 +54,12 @@ class MainView(QWidget):
             self.stop_button.setText("Stop")
             self.start_button.setText("Start Fishing")
             self.start_button.setEnabled(True)
+
+    def reset_fishing_button(self):
+        self.stop_button.setText("Stop")
+        self.stop_button.setEnabled(False)
+        self.start_button.setText("Start Fishing")
+        self.start_button.setEnabled(True)
 
     def resize_and_show(self):
         self.setWindowTitle("Auto Fishing")

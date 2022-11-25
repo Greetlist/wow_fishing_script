@@ -25,25 +25,30 @@ class FunctionalView(QWidget):
             self.g_layout.addWidget(check_box, row, col)
     
     def init_config_input(self):
+        # (Label_UI_Instance, Input_UI_Instance, default_value, min, max, step, row)
         self.functional_value_input_dict = {
-            'wow_window_name':  (QLabel('Wow Window Name: '), QLineEdit(self), "魔兽世界", 3),
-            'enable_to_work_time': (QLabel('StartToWorkTime(s): '), QDoubleSpinBox(self), 5.0, 4),
-            'rest_time': (QLabel('RestTime(s): '), QDoubleSpinBox(self), 1.0, 5),
-            'float_coordinate_changed_threshold': (QLabel('Threshold(s): '), QDoubleSpinBox(self), 40.0, 6),
-            'cast_period': (QLabel('Cast Period(s): '), QDoubleSpinBox(self), 60.0, 7),
-            'float_offset': (QLabel('Float Offset(pix): '), QDoubleSpinBox(self), 10, 8),
+            'wow_window_name': (QLabel('Wow Window Name: '), QLineEdit(self), "魔兽世界", 0, 0, 0, 3),
+            'enable_to_work_time': (QLabel('StartToWorkTime(s): '), QDoubleSpinBox(self), 5.0, 1.0, 3600.0, 1.0, 4),
+            'rest_time': (QLabel('RestTime(s): '), QDoubleSpinBox(self), 1.0, 1.0, 3600.0, 1.0, 5),
+            'float_coordinate_changed_threshold': (QLabel('Threshold(s): '), QDoubleSpinBox(self), 40.0, 1.0, 3600.0, 1.0, 6),
+            'cast_period': (QLabel('Cast Period(s): '), QDoubleSpinBox(self), 60, 1.0, 3600.0, 1.0, 7),
+            'float_offset': (QLabel('Float Offset(pix): '), QDoubleSpinBox(self), 10, 1.0, 100.0, 1.0, 8),
+            'jump_ratio': (QLabel('Jump Ratio: '), QDoubleSpinBox(self), 0.1, 0.00, 1.0, 0.01, 9),
+            'max_fishing_count': (QLabel('MaxFishingCount: '), QDoubleSpinBox(self), -1, 0, 10000, 1, 10),
         }
         for _, t in self.functional_value_input_dict.items():
-            label, edit, default_value, row = t[0], t[1], t[2], t[3]
+            label, edit, default_value = t[0], t[1], t[2]
+            min_value, max_value, step = t[3], t[4], t[5]
+            row = t[6]
             label.setFrameShadow(QFrame.Raised)
             label.setBuddy(edit)
             if type(edit) == QLineEdit:
                 edit.setText(default_value)
             else:
                 edit.setValue(default_value)
-                edit.setMinimum(1.0)
-                edit.setMaximum(3600.0)
-                edit.setSingleStep(1.0)
+                edit.setMinimum(min_value)
+                edit.setMaximum(max_value)
+                edit.setSingleStep(step)
             self.g_layout.addWidget(label, row, 0)
             self.g_layout.addWidget(edit, row, 1)
 

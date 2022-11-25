@@ -8,6 +8,9 @@ import mss
 from Logger import FishingLogger
 import traceback
 
+import constant
+import util
+
 class FishingHelper:
     def __init__(self, functional_config, capture_area_coordinate) -> None:
         self.init_functional_config(functional_config)
@@ -27,13 +30,11 @@ class FishingHelper:
         self.start_fishing_time = 0
         self.tolerate_time = 20 #second
 
+        self.current_fishing_count = 0
+
     def init_key_binding(self):
         self.fish_key = 0x31 #key_board 1
         self.get_fish_key = 0x39 #key_board 9
-        self.space_key = 0x20 #key_board_space
-        self.skill_1 = 0x36 #key_board 6
-        self.skill_2 = 0x37 #key_board 7
-        self.skill_3 = 0x38 #key_board 8
 
     def init_functional_config(self, functional_config):
         self.wow_window_name = functional_config['wow_window_name'] # need to be utf-8
@@ -49,6 +50,8 @@ class FishingHelper:
         self.is_test = functional_config['is_test']
         self.is_foreground = functional_config['is_foreground']
         self.float_offset = functional_config['float_offset']
+        self.jump_ratio = functional_config['jump_ratio']
+        self.max_fishing_count = functional_config['max_fishing_count']
 
     def init_capture_area(self, capture_area_coordinate):
         self.capture_left = capture_area_coordinate['left']
@@ -77,6 +80,7 @@ class FishingHelper:
             try:
                 if self.is_cast_periodically:
                     self.cast_some_skill()
+                self.random_jump()
                 self.start_fishing()
                 while not self.is_over_tolerate_time() and not self.is_bite_hook():
                     time.sleep(self.wait_bite_time)
@@ -84,6 +88,8 @@ class FishingHelper:
                     time.sleep(self.enable_to_work_time)
                 self.get_fish()
                 self.reset_all_condition()
+                if self.reach_max_fising_count():
+                    break
             except Exception as e:
                 FishingLogger.error(traceback.format_exc())
             time.sleep(self.rest_time)
@@ -185,20 +191,35 @@ class FishingHelper:
 
     def cast_some_skill(self):
         if self.last_cast_time == 0 or time.time() - self.last_cast_time > self.cast_period:
-            key_press_list = ['space', '6'] if self.is_foreground else [self.space_key, self.skill_1]
+            key_press_list = ['6']
             for key in key_press_list:
-                if self.is_foreground:
-                    pyautogui.press(key)
-                    time.sleep(self.rest_time)
-                else:
-                    win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, key, 0)
-                    win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, key, 0)
-                    time.sleep(self.rest_time)
+                self.send_key_to_wow(key)
             self.last_cast_time = time.time()
             time.sleep(self.enable_to_work_time)
 
+    def random_jump(self):
+        if util.roll_for_ratio(self.jump_ratio):
+            self.send_key_to_wow('space')
+            time.sleep(self.rest_time)
+
+    def reach_max_fising_count(self):
+        self.current_fishing_count += 1
+        return self.current_fishing_count >= self.max_fishing_count
+
     def is_over_tolerate_time(self):
         return time.time() - self.start_fishing_time > self.tolerate_time
+
+    def send_key_to_wow(self, key_board_str):
+        real_key = \
+            constant.key_board_map[key_board_str]['fg'] \
+            if self.is_foreground \
+            else constant.key_board_map[key_board_str]['bg']
+        if self.is_foreground:
+            pyautogui.press(real_key)
+        else:
+            win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, real_key, 0)
+            win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, real_key, 0)
+        time.sleep(self.rest_time)
 
     def test_capture(self):
         with mss.mss() as sct:
