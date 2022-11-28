@@ -2,9 +2,10 @@ from ui import ScreenShotCoordinateView
 from ui import FunctionalView
 import FishingHelper
 from PySide6.QtWidgets import QWidget, QPushButton, QGridLayout, QTextBrowser
-from PySide6.QtCore import QSize, QThread
+from PySide6.QtCore import QSize
 import FishingThread
 import LogFetcherThread
+from PySide6 import QtWidgets
 
 class MainView(QWidget):
     def __init__(self, parent=None):
@@ -76,3 +77,10 @@ class MainView(QWidget):
 
     def closeEvent(self, e):
         self.log_fetch_thread.terminate()
+
+    #def moveEvent(self, e):
+    #    old_screen = QtWidgets.QApplication.screenAt(e.oldPos())
+    #    new_screen = QtWidgets.QApplication.screenAt(e.pos())
+    #    if old_screen != new_screen:
+    #        print(old_screen, new_screen)
+    #    return super().moveEvent(e)
