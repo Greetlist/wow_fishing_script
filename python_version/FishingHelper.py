@@ -104,7 +104,7 @@ class FishingHelper:
             win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, self.fish_key, 0)
             win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, self.fish_key, 0)
         self.start_fishing_time = time.time()
-        time.sleep(2) # sleep for a while to find fish_float
+        time.sleep(3) # sleep for a while to find fish_float
         self.find_fish_float()
 
     def is_bite_hook(self):

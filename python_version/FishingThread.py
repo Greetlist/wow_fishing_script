@@ -11,4 +11,4 @@ class FishingThread(QThread):
             self.fishing_helper.test()
         else:
             self.fishing_helper.start()
-        self.parent_widget.rest_fishing_button()
+        self.parent_widget.reset_fishing_button()
