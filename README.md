@@ -55,7 +55,7 @@ TODO
 1. Fishing area. (Coordinate of screen is auto-complete, support multi-screen, **not support cross-screen**)
 2. Game Window Name. (Adjust different language)
 3. Fishing Idle Time.
-4. Cast Some Skill Periodically. (toy or bait)
+4. Cast Some Skill Periodically [keyboard '6']. (toy or bait)
 5. Switch To TestMode. (Take some screenshot for testing)
 6. Switch To FG/BG Mode. (BG Mode allow you to do something else while WOW window is inactive)
 7. Use Coordinate judgement or Area Judgement. (Coordinate Judgement is more stable while testing in real game)
