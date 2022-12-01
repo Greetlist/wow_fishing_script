@@ -59,7 +59,7 @@ TODO
 5. Switch To TestMode. (Take some screenshot for testing)
 6. Switch To FG/BG Mode. (BG Mode allow you to do something else while WOW window is inactive)
 7. Use Coordinate judgement or Area Judgement. (Coordinate Judgement is more stable while testing in real game)
-8. Max Fishing Count, :warning: **0 is not ifinity, Please Increase this value manually**
+8. Max Fishing Count, :warning: **0 is not infinity, Please Increase this value manually**
 9. Probability Of Jumping before every fishing (default: 10%).
 
 # TODO List
