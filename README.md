@@ -61,11 +61,13 @@ TODO
 7. Use Coordinate judgement or Area Judgement. (Coordinate Judgement is more stable while testing in real game)
 
 # TODO List
+- [x] Add Max-Fishing-Count config.
+- [x] Add Random Jump and Jump probability config.
 - [ ] Support invoke some WOW's Macro before fishing.
-- [ ] Add fishing count config.
 - [ ] Auto Online/Offline.
 - [ ] Key Binding configurable.
 - [ ] Auto change coordinate threshold. (Reinforcement)
+- [ ] Auto change Fish-Float hsv color range to fit different environment. (Reinforcement)
 
 # Report Bug And Advice
 If you trapped with some unknown bugs or want to give some advice, Please [new issue](https://github.com/Greetlist/wow_fishing_script/issues/new/choose) to me.
