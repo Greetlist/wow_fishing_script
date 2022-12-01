@@ -55,10 +55,12 @@ TODO
 1. Fishing area. (Coordinate of screen is auto-complete, support multi-screen, **not support cross-screen**)
 2. Game Window Name. (Adjust different language)
 3. Fishing Idle Time.
-4. Cast Some Skill Periodically. (Jump or something else)
+4. Cast Some Skill Periodically. (toy or bait)
 5. Switch To TestMode. (Take some screenshot for testing)
 6. Switch To FG/BG Mode. (BG Mode allow you to do something else while WOW window is inactive)
 7. Use Coordinate judgement or Area Judgement. (Coordinate Judgement is more stable while testing in real game)
+8. Max Fishing Count, :warning: **0 is not ifinity, Please Increase this value manually**
+9. Probability Of Jumping before every fishing (default: 10%).
 
 # TODO List
 - [x] Add Max-Fishing-Count config.
