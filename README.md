@@ -1,3 +1,4 @@
+- [关服](#shut-down-server)
 - [OverView](#overview)
 - [How To Build It](#how-to-build-it)
   - [python version](#python-version)
@@ -10,6 +11,14 @@
 - [Report Bug And Advice](#report-bug-and-advice)
 - [Relate Tools And Repo](#relate-tools-and-repo)
 - [Useful WebSite](#useful-website)
+
+# Shut Down Server
+一晃眼关服已经差不多七个月了，写的脚本也没了用武之地，每个大版本的初期都是赚钱的好时候。
+10.0初期，脚本也给我带来了300多万的收益。
+10.0也把心心念的麦卡也完工了。
+想念我的麦卡完工，想念我的奶骑，想念跟朋友一起冲层的时光。
+希望国服快快回归吧，虽然不太现实。
+想拿一条水獭给18年的青春画上一个句号。
 
 # OverView
 Auto Fising Script with GUI.
