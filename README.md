@@ -1,4 +1,5 @@
 - [关服](#shut-down-server)
+- [开服](#sweety-home)
 - [OverView](#overview)
 - [How To Build It](#how-to-build-it)
   - [python version](#python-version)
@@ -19,6 +20,9 @@
 想念我的麦卡完工，想念我的奶骑，想念跟朋友一起冲层的时光。
 希望国服快快回归吧，虽然不太现实。
 想拿一条水獭给18年的青春画上一个句号。
+
+# Sweety home
+2024-04-10，微软网易又再次重新合作了，看来水獭又有机会拿到了
 
 # OverView
 Auto Fising Script with GUI.
