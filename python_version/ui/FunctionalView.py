@@ -34,7 +34,7 @@ class FunctionalView(QWidget):
             'cast_period': (QLabel('Cast Period(s): '), QDoubleSpinBox(self), 60, 1.0, 3600.0, 1.0, 7),
             'float_offset': (QLabel('Float Offset(pix): '), QDoubleSpinBox(self), 10, 1.0, 100.0, 1.0, 8),
             'jump_ratio': (QLabel('Jump Ratio: '), QDoubleSpinBox(self), 0.1, 0.00, 1.0, 0.01, 9),
-            'max_fishing_count': (QLabel('MaxFishingCount: '), QDoubleSpinBox(self), -1, 0, 10000, 1, 10),
+            'max_fishing_count': (QLabel('MaxFishingCount: '), QDoubleSpinBox(self), -1, 1000, 10000, 1, 10),
         }
         for _, t in self.functional_value_input_dict.items():
             label, edit, default_value = t[0], t[1], t[2]

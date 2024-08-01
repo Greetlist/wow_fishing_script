@@ -113,7 +113,9 @@ class FishingHelper:
 
     def is_bite_hook(self):
         cur_img = self.capture_main_fishing_screen()
-        cur_contour = self.get_frame_contours(cur_img)
+        cur_contour, find_contours = self.get_frame_contours(cur_img)
+        if not find_contours and self.last_mid_x > 0 and self.last_mid_y > 0:
+            return True
         cur_area = cv2.contourArea(cur_contour)
         if self.use_area:
             FishingLogger.info(
@@ -156,8 +158,11 @@ class FishingHelper:
         cv2.erode(img_morph, (3, 3), img_morph, iterations=2)
         cv2.dilate(img_morph, (3, 3), img_morph, iterations=2)
         cnts, _ = cv2.findContours(img_morph.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        c = max(cnts, key=cv2.contourArea)
-        return c
+        try:
+            c = max(cnts, key=cv2.contourArea)
+        except Exception as e:
+            return np.ndarray([]), False
+        return c, True
 
     def capture_main_fishing_screen(self):
         with mss.mss() as sct:
@@ -176,7 +181,7 @@ class FishingHelper:
 
     def find_fish_float(self):
         cur_img = self.capture_main_fishing_screen()
-        contour = self.get_frame_contours(cur_img)
+        contour, _ = self.get_frame_contours(cur_img)
         cur_moments = cv2.moments(contour)
         if cur_moments['m00'] != 0:
             self.fish_float_x = self.capture_left + int(cur_moments['m10'] / cur_moments['m00']) + self.float_offset

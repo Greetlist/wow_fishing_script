@@ -28,7 +28,7 @@ def test_single_img():
         pass
 
     # Load image
-    image = cv2.imread('imgs/test_7.png')
+    image = cv2.imread('imgs/test_empty.png')
     # Create a window
     cv2.namedWindow('image')
     # Create trackbars for color change
