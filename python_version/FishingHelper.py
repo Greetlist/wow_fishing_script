@@ -7,12 +7,13 @@ import numpy as np
 import mss
 from Logger import FishingLogger
 import traceback
+import os
 
 import constant
 import util
 
 class FishingHelper:
-    def __init__(self, functional_config, capture_area_coordinate) -> None:
+    def __init__(self, functional_config, capture_area_coordinate, hsv_min_list=[0, 0, 0], hsv_max_list=[10, 255, 255]) -> None:
         self.init_functional_config(functional_config)
         self.init_capture_area(capture_area_coordinate)
         self.init_key_binding()
@@ -26,6 +27,9 @@ class FishingHelper:
         self.fish_float_y = 0
         self.wait_bite_time = 0.1 # unit: second
         self.last_cast_time = 0
+
+        self.low_hsv = np.array(hsv_min_list)
+        self.high_hsv = np.array(hsv_max_list)
 
         self.start_fishing_time = 0
         self.tolerate_time = 20 #second
@@ -145,9 +149,9 @@ class FishingHelper:
     # (low_hsv, hight_hsv) color need adjust during environment or weather changed.
     def get_frame_contours(self, frame_img):
         img_hsv = cv2.cvtColor(frame_img, cv2.COLOR_BGR2HSV)
-        low_hsv = np.array([0, 170, 0])
-        high_hsv = np.array([10, 255, 255])
-        img_mask = cv2.inRange(img_hsv, low_hsv, high_hsv)
+        #low_hsv = np.array([0, 170, 0])
+        #high_hsv = np.array([10, 255, 255])
+        img_mask = cv2.inRange(img_hsv, self.low_hsv, self.high_hsv)
         img_morph = img_mask.copy()
         cv2.erode(img_morph, (3, 3), img_morph, iterations=2)
         cv2.dilate(img_morph, (3, 3), img_morph, iterations=2)
@@ -239,3 +243,16 @@ class FishingHelper:
             mss.tools.to_png(cur_img.rgb, cur_img.size, output='imgs/test_{}.png'.format(i))
             FishingLogger.info("Success capture screenshot, and save to path: {}".format('imgs/test_{}.png'.format(i)))
             time.sleep(1)
+
+    def debug_hsv_color(self):
+        # start a single fish first for test
+        win32gui.PostMessage(self.wow_window, win32con.WM_KEYDOWN, self.fish_key, 0)
+        win32gui.PostMessage(self.wow_window, win32con.WM_KEYUP, self.fish_key, 0)
+        # sleep for a while to find fish_float
+        time.sleep(3)
+        temp_img_dir = os.path.dirname(__file__) + '/imgs/'
+        os.makedirs(temp_img_dir, exist_ok=True)
+        file_path = temp_img_dir + 'test_hsv.png'
+        cur_img = self.test_capture()
+        mss.tools.to_png(cur_img.rgb, cur_img.size, output=file_path)
+        return util.hsv_color_range(file_path)

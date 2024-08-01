@@ -31,7 +31,7 @@ class ScreenShotCoordinateView(QWidget):
         self.g_layout = QGridLayout()
         self.setLayout(self.g_layout)
 
-        self.g_layout.addWidget(self.rect_button, 0, 0, 1 ,4)
+        self.g_layout.addWidget(self.rect_button, 0, 0, 1, 4)
         row = 1
         for data_str, _ in self.edit_dict.items():
             cur_edit = QLineEdit(self)

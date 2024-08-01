@@ -1,3 +1,4 @@
+- [新特性](#new-feature)
 - [关服](#shut-down-server)
 - [开服](#sweety-home)
 - [OverView](#overview)
