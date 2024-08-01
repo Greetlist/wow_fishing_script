@@ -19,9 +19,22 @@ Different environment or different monitor color need different HSV color range.
 
 Debuging the image to get correct HSV is needed ASAP.
 
+2024-08-01 Finish development, Detail:
+1. Must Click `Get Fish Area` First
+2. Click `Debug HSV Color Range` to fit color range until you can only see **Red** Color in the picture. And **press q** to close dialog.
+3. Use Checkbox `Coordinate`
+4. Start Fishing
+
 对于不同环境或者不同显示器颜色，获取鱼漂颜色范围有差异，自己在使用的时候会遇到这种问题。
 
 所以需要添加调试颜色范围的功能。
+
+2024-08-01开发完成，具体步骤如下：
+1. 必须先框选鱼漂坐标。
+2. 点击`Debug HSV Color Range`按钮，会弹出一个窗口调试颜色，
+调整到只剩鱼漂的红色部分能看到为止，**按Q退出窗口**，不要点击右上角关闭
+3. 勾选Coordinate，用坐标来判断是否上钩
+4. 开始钓鱼
 
 # Shut Down Server
 一晃眼关服已经差不多七个月了，写的脚本也没了用武之地，每个大版本的初期都是赚钱的好时候。
@@ -93,7 +106,7 @@ TODO
 - [ ] Auto Online/Offline.
 - [ ] Key Binding configurable.
 - [ ] Auto change coordinate threshold. (Reinforcement)
-- [ ] Auto change Fish-Float hsv color range to fit different environment. (Reinforcement)
+- [x] Manual change Fish-Float hsv color range to fit different environment. (Reinforcement)
 
 # Report Bug And Advice
 If you trapped with some unknown bugs or want to give some advice, Please [new issue](https://github.com/Greetlist/wow_fishing_script/issues/new/choose) to me.
