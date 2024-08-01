@@ -13,10 +13,20 @@
 - [Relate Tools And Repo](#relate-tools-and-repo)
 - [Useful WebSite](#useful-website)
 
+# New Feature
+Different environment or different monitor color need different HSV color range.
+
+Debuging the image to get correct HSV is needed ASAP.
+
+对于不同环境或者不同显示器颜色，获取鱼漂颜色范围有差异，自己在使用的时候会遇到这种问题。
+
+所以需要添加调试颜色范围的功能。
+
 # Shut Down Server
 一晃眼关服已经差不多七个月了，写的脚本也没了用武之地，每个大版本的初期都是赚钱的好时候。
-10.0初期，脚本也给我带来了300多万的收益。
-10.0也把心心念的麦卡也完工了。
+
+10.0初期，脚本也给我带来了300多万的收益。10.0也把心心念的麦卡也完工了。
+
 想念我的麦卡完工，想念我的奶骑，想念跟朋友一起冲层的时光。
 希望国服快快回归吧，虽然不太现实。
 想拿一条水獭给18年的青春画上一个句号。
