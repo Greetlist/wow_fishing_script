@@ -32,7 +32,7 @@ Debuging the image to get correct HSV is needed ASAP.
 2024-08-01开发完成，具体步骤如下：
 1. 必须先框选鱼漂坐标。
 2. 点击`Debug HSV Color Range`按钮，会弹出一个窗口调试颜色，
-调整到只剩鱼漂的红色部分能看到为止，**按Q退出窗口**，不要点击右上角关闭
+调整到只剩鱼漂的红色部分能看到为止，**按q退出窗口**，不要点击右上角关闭
 3. 勾选Coordinate，用坐标来判断是否上钩
 4. 开始钓鱼
 
