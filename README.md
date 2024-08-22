@@ -1,4 +1,6 @@
 - [新特性](#new-feature)
+    - [Adjust Color](#adjust-color)
+    - [Adjust Monitor size](#adjust-monitor-size)
 - [关服](#shut-down-server)
 - [开服](#sweety-home)
 - [OverView](#overview)
@@ -15,6 +17,7 @@
 - [Useful WebSite](#useful-website)
 
 # New Feature
+## Adjust Color
 Different environment or different monitor color need different HSV color range.
 
 Debuging the image to get correct HSV is needed ASAP.
@@ -35,6 +38,17 @@ Debuging the image to get correct HSV is needed ASAP.
 调整到只剩鱼漂的红色部分能看到为止，**按q退出窗口**，不要点击右上角关闭
 3. 勾选Coordinate，用坐标来判断是否上钩
 4. 开始钓鱼
+
+## Adjust Monitor size
+base monitor size is: 1920 * 1080
+if your monitor size is different against base monitor size, please fill
+the `monitor_width` and `monitor_height` value, otherwise the coordinate 
+is wrong.
+Other step is same as before.
+
+基本显示器大小为1920 * 1080
+你的显示器如果是4K这样的话，需要先把`monior_width`跟`monitor_height`两个值
+填好之后再进行下面的截图之类的步骤。
 
 # Shut Down Server
 一晃眼关服已经差不多七个月了，写的脚本也没了用武之地，每个大版本的初期都是赚钱的好时候。
