@@ -6,7 +6,7 @@ from PySide6.QtGui import QCursor, QAction, QIcon
 import os
 
 class ScreenShotMainWidget(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, monitor_width=1920, monitor_height=1080):
         super().__init__(parent)
         self.parent = parent
         self.capture_total_screen()
@@ -14,6 +14,14 @@ class ScreenShotMainWidget(QWidget):
         self.init_screenshot_menu()
         self.mouse_press = False
         self.is_cancel = False
+        self.monitor_width = monitor_width
+        self.monitor_height = monitor_height
+
+        self.standard_width = 1920
+        self.standard_height = 1080
+
+        self.width_ratio = self.monitor_width / self.standard_width
+        self.height_ratio = self.monitor_height / self.standard_height 
 
     def capture_total_screen(self):
         total_screens = QGuiApplication.screens() #main screen's index is 0
@@ -116,12 +124,12 @@ class ScreenShotMainWidget(QWidget):
     def get_captured_pixmap_rect(self):
         left, top, right, bottom = self.calc_real_rect()
         return {
-            'left': left,
-            'top': top,
-            'right': right,
-            'bottom': bottom,
-            'width': right - left,
-            'height': bottom - top,
+            'left': left * self.width_ratio,
+            'top': top * self.height_ratio,
+            'right': right * self.width_ratio,
+            'bottom': bottom * self.height_ratio,
+            'width': (right - left) * self.width_ratio,
+            'height': (bottom - top) * self.height_ratio,
         }
 
     def calc_screen_index_and_rect(self):
